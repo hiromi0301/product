@@ -38,8 +38,8 @@ Route::post('/store', [ProductController::class, 'store'])->name('store');
 Route::get('/product/{id}', [ProductController::class,'detail'])->name('detail');
 
 //商品編集画面を表示
-Route::get('/product/edit/{id}', 'ProductController@showEdit')->name('edit');
-Route::post('/product/update','ProductController@exeUpdate')->name('update');
+Route::get('/product/edit/{id}', 'ProductController@edit')->name('edit');
+Route::post('/product/update','ProductController@update')->name('update');
 
 //商品削除
 Route::post('/product/delete/{id}','ProductController@exeDelete')->name('delete');
@@ -49,3 +49,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //ログイン機能の実装
 Route::get('/welcome','HomeController@welcome')->name('welcome');
+
+//検索結果を表示する
+Route::get('/serch',[ProductController::class,'index'])->name('serch');

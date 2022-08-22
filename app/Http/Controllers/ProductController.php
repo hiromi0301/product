@@ -16,20 +16,37 @@ class ProductController extends Controller
     //③（V）Bladeで表示する
     
     /**
-     * 商品一覧を表示する
+     * 商品一覧を表示する、検索結果一覧
      * 
      * @return view
      */
-    public function index(){
+    public function index(Request $request){
    
         
 
        // $products = Product::with('company:id,name')->orderBy('id', 'asc')->paginate(20);
         $products = Product::with('company:id,company_name')->get();
 
-        //dd($products);
+       // dd($products);
+
+
+
+       $keyword = $request->input('keyword');
        
-        return view('product.list',['products' => $products]);
+       $query = Product::query();
+    
+       if(!empty($keyword)) {
+           $query->where('product_name', 'LIKE', "%{$keyword}%")
+               ->orWhere('company_name', 'LIKE', "%{$keyword}%");
+       }
+
+       $products = $query->get();
+
+       //dd($products);
+
+       //return view('index', compact('products', 'keyword'));
+       
+        return view('product.list',['products' => $products],compact('products','keyword'));
        
        
         
@@ -81,7 +98,7 @@ public function create() {
         
         //商品のデータを受け取る
         $inputs=$request->all();
-      // dd($inputs);
+      //dd($inputs);
         $product=new Product;
         //$product->request();
         //$product->company_id=$request->company()->id;
@@ -93,18 +110,33 @@ public function create() {
         //$product->company_name=$request->company()->company_name;
         //$product->save();
 
-        $img = $request->file('img_path');
-        $path = $img->storeAs($img,'public');
+        $img = $request->img_path->getClientOriginalName();
+       
+
+        if (!is_null($img)) {
+
+            $path = $request->img_path->storeAs('',$img,'public');
+         
+        }
 
 
        // dd($img);
+
+    
 
 
         \DB::beginTransaction();
 
         try{
          //商品を登録
-         Product::create($inputs);
+         Product::create([
+            'img_path' => $path,
+            'company_id' => $inputs['company_id'],
+            'product_name' => $inputs['product_name'],
+            'price' => $inputs['price'],
+            'stock' => $inputs['stock'],
+            'content' => $inputs['content'],
+        ]);
 
          \DB::commit();
         } catch(\Throwable $e){
@@ -143,7 +175,10 @@ public function create() {
    } 
 
 
-     /**
+
+
+
+      /**
      * 商品を更新する
      * 
      * @return view
@@ -155,61 +190,21 @@ public function create() {
         //商品のデータを受け取る
         $inputs=$request->all();
 
-        
 
-        \DB::beginTransaction();
+        $product=new Product;
 
-        try{
-         //商品を登録
-        $product =  Product::find($inputs ['id']);
-         \DB::commit();
-        } catch(\Throwable $e){
-            \DB::rollback();
-            abort(500);
+       //dd($inputs);
 
-        }
+       //dd($request->img_path);
+       $img = $request->img_path->getClientOriginalName();
+      // $img = $request->file('image');
+
        
+       if (!is_null($img)) {
 
-        \Session::flash('err_msg','商品を登録しました');
-        return redirect(route('index'));
-        
-
-    }
-
-  /**
-     * 商品編集フォームを表示する
-     * @param int $id
-     * @return view
-     */
-    public function showEdit($id){
-   
-        $product = Product::find($id);
-        
-       
-        if (is_null($product)) {
-            \Session::flash('err_msg','データがありません。');
-            return redirect(route('index'));
-
+           $path = $request->img_path->storeAs('',$img,'public');
+         
         }
-
-       return view('product.edit',
-        ['product' => $product]);
-
-   } 
-
-
-
-      /**
-     * 商品を更新する
-     * 
-     * @return view
-     */
-
-
-    public function exeUpdate(ProductRequest $request) {
-        
-        //商品のデータを受け取る
-        $inputs=$request->all();
 
 
         \DB::beginTransaction();
@@ -220,13 +215,20 @@ public function create() {
          $product->fill([
              'product_name' => $inputs['product_name'],
              'content' => $inputs['content'],
-             'price' => $inputs['price'],             
+             'price' => $inputs['price'],    
+             'stock' => $inputs['stock'],
+             'company_id' => $inputs['company_id'],
+             'img_path' => $path,
+                      
          ]);
          $product->save();
          \DB::commit();
         } catch(\Throwable $e){
             \DB::rollback();
-            abort(500);
+            //var_dump($e);
+            //exit;
+            //abort(500);
+            throw new \Exception($e->getMessage());
 
         }
        
@@ -268,7 +270,54 @@ public function create() {
    } 
 
 
-   }
+/**
+     * 検索結果一覧
+     * 
+     * @return view
+     */
+    public function serch(Request $request){
+   
+        
 
+        // $products = Product::with('company:id,name')->orderBy('id', 'asc')->paginate(20);
+        // $products = Product::with('company:id,company_name')->get();
+ 
+        // dd($products);
+
+        $products=Product::getAll();
+        $viewProducts=[
+            'products'=>$products,
+        ];
+ 
+ 
+ 
+        $keyword = $request->input('keyword');
+        
+        $query = Product::query();
+     
+        if(!empty($keyword)) {
+            $query->where('product_name', 'LIKE', "%{$keyword}%")
+                ->orWhere('company_name', 'LIKE', "%{$keyword}%");
+        }
+ 
+        $products = $query->get();
+ 
+        //dd($products);
+ 
+        //return view('index', compact('products', 'keyword'));
+        
+         return view('product.serch',$viewProducts);
+        
+        
+         
+    } 
+    
+
+
+}
+
+
+
+   
 
 

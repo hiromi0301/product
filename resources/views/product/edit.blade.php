@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
         <h2>編集フォーム</h2>
-        <form method="POST" action="{{ route('update') }}" onSubmit="return checkSubmit()">
+        <form method="POST" action="{{ route('update') }}" onSubmit="return checkSubmit()"  enctype="multipart/form-data">
           @csrf  
             <input type="hidden" name="id" value="{{ $product->id }}">
             <div class="form-group">
@@ -26,7 +26,7 @@
             </div>
             <div class="form-group">
                 <label for="company_name">{{ __('メーカー') }}<span class="badge badge-danger ml-2">{{ __('必須') }}</span></label>
-                    <select class="form-control" id="company_id" name="company_name">
+                    <select class="form-control" id="company_id" name="company_id">
                         <option value="1">A</option>
                         <option value="2">B</option>
                         <option value="3">C</option>
@@ -93,7 +93,7 @@
                 <label for="image">
                     画像登録
                 </label>
-                <input type="file" class="form-control-file" name='img_path' id="img_path">
+                <input type="file" class="form-control-file" name='img_path' id="id">
                
                 @if ($errors->has('img_path'))
                     <div class="text-danger">

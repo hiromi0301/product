@@ -27,11 +27,11 @@
             <div class="form-group">
                 <label for="company_name">{{ __('メーカー') }}<span class="badge badge-danger ml-2">{{ __('必須') }}</span></label>
                     <select class="form-control" id="company_id" name="company_id">
-                        <option value="1">A</option>
-                        <option value="2">B</option>
-                        <option value="3">C</option>
-                        <option value="4">D</option>
-                        <option value="5">E</option>
+                        <option value="1" name="company_id">A</option>
+                        <option value="2" name="company_id">B</option>
+                        <option value="3" name="company_id">C</option>
+                        <option value="4" name="company_id">D</option>
+                        <option value="5" name="company_id">E</option>
                     </select>
                 @if ($errors->has('company_name'))
                     <div class="text-danger">
@@ -93,7 +93,7 @@
                 <label for="img_path">
                     画像登録
                 </label>
-                <input type="file" class="form-control-file" name='img_path' id="id">
+                <input type="file" class="form-control-file" name="img_path" >
                
                 @if ($errors->has('img_path'))
                     <div class="text-danger">

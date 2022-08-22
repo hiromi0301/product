@@ -27,8 +27,8 @@ class ProductRequest extends FormRequest
             'product_name' => 'required | max:100',
             'content' => 'required',
             'price' => 'required',
-            'stock' => 'required'
-           // 'company_id' => 'required_without:company_name',
+            'stock' => 'required',
+            'company_id' => 'required_without:company_name',
            // 'company_name' => 'required_without:company_id'
         ];
     }

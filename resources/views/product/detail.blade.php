@@ -4,7 +4,7 @@
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
       <h2>{{ $product->product_name }}</h2>
-      <p>商品画像</P>
+      <p><img src="{{ asset('storage/'.$product->img_path) }}" width="100px"></p>
       <p>メーカー名{{ $product->company->company_name }}</P>
       <p>価格{{ $product->price }}</P>
       <p>在庫数{{ $product->stock }}</p>

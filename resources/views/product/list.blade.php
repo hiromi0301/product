@@ -3,12 +3,43 @@
 @section('content')
 <div class="row">
   <div class="col-md-12 col-md-offset-2">
-      <h2>商品一覧</h2>
+    
       @if (session('err_msg'))
         <p class="text-danger">
             {{ session('err_msg')}}
         </p>
       @endif  
+
+      <p>検索条件を入力してください</p>
+<form action="{{ url('/serch')}}" method="post">
+  {{ csrf_field()}}
+  {{method_field('get')}}
+
+  <div class="form-group">
+    <label>商品名</label>
+    <input type="text" class="form-control col-md-5" placeholder="検索したい商品名を入力してください" name="product_name">
+  </div>
+  <div class="form-group">
+    <label>メーカー名</label>
+    <select class="form-control col-md-5" name="company_id">
+    <option value="1" name="company_id">A</option>
+    <option value="2" name="company_id">B</option>
+    <option value="3" name="company_id">C</option>
+    <option value="4" name="company_id">D</option>
+    <option value="5" name="company_id">E</option>
+     </select>
+   </div>
+
+ <button type="submit" class="btn btn-primary col-md-5">検索</button>
+</form>
+@if(session('flash_message'))
+<div class="alert alert-primary" role="alert" style="margin-top:50px;">{{ session('flash_message')}}</div>
+@endif
+<div style="margin-top:50px;">
+
+
+
+<h2>商品一覧</h2>
 
       <table class="table table-striped">
           <tr>
@@ -29,7 +60,7 @@
        
           <tr>
               <td>{{ $product->id }}</td>
-              <td><img src="{{$product->img_path}}" width="100px"></td>
+              <td><img src="{{ asset('storage/'.$product->img_path) }}" width="100px"></td>
               <td><a href="/product/{{ $product->id }}">{{ $product->product_name }}</a></td>
               <td>{{ $product->price }}</td>
               <td>{{ $product->stock }}</td>
