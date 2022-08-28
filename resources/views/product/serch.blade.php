@@ -10,7 +10,7 @@
   </tr>
   @foreach($products as $product)
     <tr>
-      <td>{{$product->product_name}}</td><td>{{$product->company->company_name}}</td>
+      <td>{{$product_keyword->product_name}}</td><td>{{$product->company->company_name}}</td>
     </tr>
   @endforeach
 </table>

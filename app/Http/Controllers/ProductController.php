@@ -31,22 +31,25 @@ class ProductController extends Controller
 
 
 
-       $keyword = $request->input('keyword');
+       $product_keyword = $request->product_name;
+       $company_keyword = $request->company_id;
        
+   // dd($product_keyword);
+
        $query = Product::query();
     
-       if(!empty($keyword)) {
-           $query->where('product_name', 'LIKE', "%{$keyword}%")
-               ->orWhere('company_name', 'LIKE', "%{$keyword}%");
+       if(!empty($product_keyword)) {
+           $query->where('product_name', 'LIKE', "%{$product_keyword}%")
+               ->Where('company_name', 'LIKE', "%{$company_keyword}%");
        }
 
-       $products = $query->get();
+    // $products = $query->get();
 
        //dd($products);
 
        //return view('index', compact('products', 'keyword'));
        
-        return view('product.list',['products' => $products],compact('products','keyword'));
+        return view('product.list',['products' => $products],compact('products','product_keyword'));
        
        
         
