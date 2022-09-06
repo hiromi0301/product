@@ -34,22 +34,26 @@ class ProductController extends Controller
        $product_keyword = $request->product_name;
        $company_keyword = $request->company_id;
        
-   // dd($product_keyword);
+    //dd($product_keyword);
 
        $query = Product::query();
     
        if(!empty($product_keyword)) {
-           $query->where('product_name', 'LIKE', "%{$product_keyword}%")
-               ->Where('company_name', 'LIKE', "%{$company_keyword}%");
+           $query->where('product_name', 'LIKE', "%{$product_keyword}%");
        }
 
-    // $products = $query->get();
+       if(!empty($company_keyword)){           
+
+        $query->where('company_name', 'LIKE', "%{$company_keyword}%");
+       }
+
+    $products = $query->get();
 
        //dd($products);
 
        //return view('index', compact('products', 'keyword'));
        
-        return view('product.list',['products' => $products],compact('products','product_keyword'));
+        return view('product.list',['products' => $products]);
        
        
         
@@ -291,25 +295,34 @@ public function create() {
         $viewProducts=[
             'products'=>$products,
         ];
+       
+      
  
- 
- 
-        $keyword = $request->input('keyword');
-        
-        $query = Product::query();
-     
-        if(!empty($keyword)) {
-            $query->where('product_name', 'LIKE', "%{$keyword}%")
-                ->orWhere('company_name', 'LIKE', "%{$keyword}%");
+        $product_keyword = $request->product_name;
+        $company_keyword = $request->company_id;
+         
+         $query = Product::query();
+      
+       if(!empty($product_keyword)) {
+            $query->where('product_name', 'LIKE', "%{$product_keyword}%");
         }
  
-        $products = $query->get();
+        if(!empty($company_keyword)){           
+ 
+ $query->where('company_name', 'LIKE', "%{$company_keyword}%");
+        }
+  
+         $products = $query->get();
+  
+          return view('product.serch',$products);
+          
+     }
  
         //dd($products);
  
         //return view('index', compact('products', 'keyword'));
         
-         return view('product.serch',$viewProducts);
+       
         
         
          
@@ -317,7 +330,6 @@ public function create() {
     
 
 
-}
 
 
 
