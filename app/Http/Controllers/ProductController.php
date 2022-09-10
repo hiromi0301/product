@@ -289,17 +289,15 @@ public function create() {
         // $products = Product::with('company:id,name')->orderBy('id', 'asc')->paginate(20);
         // $products = Product::with('company:id,company_name')->get();
  
-        // dd($products);
+        // dd($products);      
 
-        $products=Product::getAll();
-        $viewProducts=[
-            'products'=>$products,
-        ];
        
       
  
         $product_keyword = $request->product_name;
         $company_keyword = $request->company_id;
+
+       // dd($product_keyword);
          
          $query = Product::query();
       
@@ -309,12 +307,14 @@ public function create() {
  
         if(!empty($company_keyword)){           
  
- $query->where('company_name', 'LIKE', "%{$company_keyword}%");
+ $query->where('company_id', 'LIKE', "%{$company_keyword}%");
         }
   
          $products = $query->get();
+
+        // dd($products);
   
-          return view('product.serch',$products);
+          return view('product.serch',['products' => $products]);
           
      }
  

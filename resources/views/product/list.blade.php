@@ -22,6 +22,7 @@
   <div class="form-group">
     <label>メーカー名</label>
     <select class="form-control col-md-5" name="company_id">
+    <option disabled selected>未選択</option>
     <option value="1" name="company_id">A</option>
     <option value="2" name="company_id">B</option>
     <option value="3" name="company_id">C</option>
