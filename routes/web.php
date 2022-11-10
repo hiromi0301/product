@@ -51,4 +51,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/welcome','HomeController@welcome')->name('welcome');
 
 //検索結果を表示する
-Route::get('/serch',[ProductController::class,'serch'])->name('serch');
+Route::get('/serch',[ProductController::class,'index'])->name('index');

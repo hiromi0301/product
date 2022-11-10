@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Company;
 use App\Models\Sale;
 use App\Http\Requests\ProductRequest;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -79,7 +80,7 @@ class ProductController extends Controller
 
     public function create(Request $request) {
         
-
+        
             return   view('product.form');
                               }
 
@@ -228,8 +229,12 @@ class ProductController extends Controller
                         }
                     \DB::beginTransaction();
                         try{
-                            //商品を登録
-                            Product::destroy($id);
+                                DB::beginTransaction();
+                                    //商品を登録
+                                    Product::destroy($id);
+
+                                        DB::commit();
+
                             }catch(\Throwable $e){
                                 abort(500);
    

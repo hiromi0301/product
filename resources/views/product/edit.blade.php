@@ -112,13 +112,7 @@
         </form>
     </div>
 </div>
-<script>
-function checkSubmit(){
-if(window.confirm('更新してよろしいですか？')){
-    return true;
-} else {
-    return false;
-}
-}
-</script>
+
+<script src="{{ asset('js/common.js') }}"></script>
+
 @endsection
