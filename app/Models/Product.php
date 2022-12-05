@@ -23,7 +23,17 @@ class Product extends Model
 
 
     public function company(){
+
+        //$product_keyword = $request->product_name;
+        //$company_keyword = $request->company_id;   
     return $this->belongsTo('App\Models\Company');
     }
+
+    public function getData(){
+
+        $data = DB::table($this->table)->get();
+
+        return $data;
+                              }
 
 }
