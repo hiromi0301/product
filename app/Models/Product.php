@@ -36,4 +36,27 @@ class Product extends Model
         return $data;
                               }
 
+    public function index (Request $request){
+
+        $product_keyword = $request->product_name;
+        $company_keyword = $request->company_id;
+       
+        $query = Product::query();
+    
+        if(!empty($product_keyword)) {
+                        
+            $query->where('product_name', 'LIKE', "%{$product_keyword}%");
+                                      }
+
+        if(!empty($company_keyword)){           
+
+        $query->where('company_id', 'LIKE', "%{$company_keyword}%");
+                                     }
+           
+
+    }                         
+
+
+
+
 }

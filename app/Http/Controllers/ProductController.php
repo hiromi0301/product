@@ -29,20 +29,22 @@ class ProductController extends Controller
        
         $query = Product::query();
     
-        if(!empty($product_keyword)) {
+        //if(!empty($product_keyword)) {
                         
-            $query->where('product_name', 'LIKE', "%{$product_keyword}%");
-                                      }
+          //  $query->where('product_name', 'LIKE', "%{$product_keyword}%");
+                                   //   }
 
-        if(!empty($company_keyword)){           
+       // if(!empty($company_keyword)){           
 
-        $query->where('company_id', 'LIKE', "%{$company_keyword}%");
-                                     }
+        //$query->where('company_id', 'LIKE', "%{$company_keyword}%");
+                                   //  }
         
         $products = $query->get();
 
        
-         return view('product.list',['products' => $products]);
+         //return view('product.list',['products' => $products]);
+
+         return view('product.serch')->with('product_keyword');
        
        
         
