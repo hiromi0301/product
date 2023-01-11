@@ -16,40 +16,41 @@ class ProductController extends Controller
     //②（C）ContorollerからBladeに渡す
     //③（V）Bladeで表示する
     
+    
+
     /**
-     * 商品一覧を表示する、検索結果一覧
+     * 商品一覧を表示する
      * 
      * @return view
      */
-    public function index(Request $request){
+    public function index(){
+   
+    
+        $products = Product::all();
+
+        return view ("product.list",['products' => $products]);
+
+    
+       
+        
+                             } 
+
+    /**
+     * 商品検索結果一覧
+     * 
+     * @return view
+     */
+    public function serch(Request $request){
    
 
-        $product_keyword = $request->product_name;
-        $company_keyword = $request->company_id;
-       
-        $query = Product::query();
-    
-        //if(!empty($product_keyword)) {
-                        
-          //  $query->where('product_name', 'LIKE', "%{$product_keyword}%");
-                                   //   }
-
-       // if(!empty($company_keyword)){           
-
-        //$query->where('company_id', 'LIKE', "%{$company_keyword}%");
-                                   //  }
+        $products = Product::getList($request);
         
-        $products = $query->get();
-
-       
-         //return view('product.list',['products' => $products]);
-
-         return view('product.serch')->with('product_keyword');
-       
+        return view('product.serch', ['products' => $products]);
+    
        
         
                                             } 
-   
+
 
 
     /**
@@ -59,20 +60,20 @@ class ProductController extends Controller
      */
     public function detail($id){
    
-        $product = Product::find($id);
+    $product = Product::find($id);
         
-            if (is_null($product)) {
+    if (is_null($product)) {
             
-                \Session::flash('err_msg','データがありません。');
+    \Session::flash('err_msg','データがありません。');
           
-                    return redirect(route('index'));
+        return redirect(route('index'));
 
-                                    }
+                            }
 
-                        return view('product.detail',
-                            ['product' => $product]);
+        return view('product.detail',
+        ['product' => $product]);
 
-                                } 
+                            } 
 
     /**
      * 商品登録画面を表示する

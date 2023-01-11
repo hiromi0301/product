@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+
 
 class Product extends Model
 {
@@ -36,7 +38,7 @@ class Product extends Model
         return $data;
                               }
 
-    public function index (Request $request){
+    public static function getList($request){
 
         $product_keyword = $request->product_name;
         $company_keyword = $request->company_id;
@@ -52,7 +54,8 @@ class Product extends Model
 
         $query->where('company_id', 'LIKE', "%{$company_keyword}%");
                                      }
-           
+        
+            return $query->get();                             
 
     }                         
 

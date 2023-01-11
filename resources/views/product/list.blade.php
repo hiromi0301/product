@@ -11,13 +11,13 @@
       @endif  
 
       <p>検索条件を入力してください</p>
-<form action="{{ url('/serch')}}" method="post">
+<form action="{{ url('/serch')}}" method="POST">
   {{ csrf_field()}}
   {{method_field('get')}}
 
   <div class="form-group">
     <label>商品名</label>
-    <input type="text" class="form-control col-md-5" placeholder="検索したい商品名を入力してください" name="product_name">
+    <input type="serch" class="form-control col-md-5" placeholder="検索したい商品名を入力してください" name="product_name">
   </div>
   <div class="form-group">
     <label>メーカー名</label>
