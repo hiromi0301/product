@@ -189,28 +189,28 @@ class ProductController extends Controller
                              }
 
 
-        \DB::beginTransaction();
+        //\DB::beginTransaction();
 
-        try{
+        //try{
             //商品を登録
-            $product = Product::find($inputs['id']);
-            $product->fill([
-                'product_name' => $inputs['product_name'],
-                'content' => $inputs['content'],
-                'price' => $inputs['price'],    
-                'stock' => $inputs['stock'],
-                'company_id' => $inputs['company_id'],
-                'img_path' => $path,
+            //$product = Product::find($inputs['id']);
+            //$product->fill([
+                //'product_name' => $inputs['product_name'],
+                //'content' => $inputs['content'],
+                //'price' => $inputs['price'],    
+                //'stock' => $inputs['stock'],
+                //'company_id' => $inputs['company_id'],
+                //'img_path' => $path,
                       
-                            ]);
-            $product->save();
-            \DB::commit();
+                            //]);
+            //$product->save();
+            //\DB::commit();
             
-            } catch(\Throwable $e){
-                \DB::rollback();
-                throw new \Exception($e->getMessage());
+            //} catch(\Throwable $e){
+                //\DB::rollback();
+                //throw new \Exception($e->getMessage());
 
-                                   }
+                                   //}
             \Session::flash('err_msg','商品を更新しました');
             return redirect(route('index'));
         
@@ -231,17 +231,17 @@ class ProductController extends Controller
 
                         }
         
-        \DB::beginTransaction();
-        try{
-            DB::beginTransaction();
+        //\DB::beginTransaction();
+        //try{
+            //DB::beginTransaction();
             //商品を登録
-            Product::destroy($id);
-            DB::commit();
+            //Product::destroy($id);
+            //DB::commit();
 
-            }catch(\Throwable $e){
-                abort(500);
+            //}catch(\Throwable $e){
+                //abort(500);
    
-                                 }
+                                 //}
 
             \Session::flash('err_msg','削除しました。');
             return redirect(route('index'));

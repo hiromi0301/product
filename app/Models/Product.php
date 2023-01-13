@@ -60,6 +60,71 @@ class Product extends Model
     }                         
 
 
+    public static function getUpdate($request){
+        
+        
+        $inputs = $request->all();
+
+
+        $product = new Product;
+
+        $img = $request->img_path->getClientOriginalName();
+      
+        if (!is_null($img)) {
+
+            $path = $request->img_path->storeAs('',$img,'public');
+         
+                             }
+        
+        \DB::beginTransaction();
+        try{
+        $product = Product::find($inputs['id']);
+        $product->fill([
+            'product_name' => $inputs['product_name'],
+            'content' => $inputs['content'],
+            'price' => $inputs['price'],    
+            'stock' => $inputs['stock'],
+            'company_id' => $inputs['company_id'],
+            'img_path' => $path,
+                  
+                        ]);
+        $product->save();
+        \DB::commit();
+        
+        } catch(\Throwable $e){
+            \DB::rollback();
+            throw new \Exception($e->getMessage());
+
+                               }
+        \Session::flash('err_msg','商品を更新しました');
+        //return redirect(route('index'));
+          return this.update;                 
+                                                }
+
+    
+
+    public static function exeDelete($id){
+
+        \DB::beginTransaction();
+        try{
+            DB::beginTransaction();
+            //商品を登録
+            Product::destroy($id);
+            DB::commit();
+
+            }catch(\Throwable $e){
+                abort(500);
+
+        return $product->get();           
+   
+                                 }
+     
+
+
+                                                }
+
+
+
 
 
 }
