@@ -60,7 +60,7 @@ class Product extends Model
     }                         
 
 
-    public static function getStore(ProductRequest $request){
+    public static function getStore($request){
 
 
         $inputs = $request->all();
