@@ -111,25 +111,25 @@ class ProductController extends Controller
          
                              }
 
-        \DB::beginTransaction();
+        //\DB::beginTransaction();
 
-        try{
+        //try{
             //商品を登録
-            Product::create([
-            'img_path' => $path,
-            'company_id' => $inputs['company_id'],
-            'product_name' => $inputs['product_name'],
-            'price' => $inputs['price'],
-            'stock' => $inputs['stock'],
-            'content' => $inputs['content'],
-                              ]);
+            //Product::create([
+            //'img_path' => $path,
+            //'company_id' => $inputs['company_id'],
+            //'product_name' => $inputs['product_name'],
+            //'price' => $inputs['price'],
+            //'stock' => $inputs['stock'],
+            //'content' => $inputs['content'],
+                              //]);
 
-        \DB::commit();
-            } catch(\Throwable $e){
-            \DB::rollback();
-            abort(500);
+        //\DB::commit();
+            //} catch(\Throwable $e){
+            //\DB::rollback();
+            //abort(500);
 
-                                    }
+                                    //}
        
 
         \Session::flash('err_msg','商品を登録しました');
@@ -212,6 +212,7 @@ class ProductController extends Controller
 
                                    //}
             \Session::flash('err_msg','商品を更新しました');
+            $products = Product::getUpdate($request);
             return redirect(route('index'));
         
 
@@ -223,7 +224,7 @@ class ProductController extends Controller
      * @param int $id
      * @return view
      */
-    public function exeDelete($id){
+    public function delete($id){
 
         if (empty($id)) {
         \Session::flash('err_msg','データがありません。');
@@ -244,6 +245,8 @@ class ProductController extends Controller
                                  //}
 
             \Session::flash('err_msg','削除しました。');
+
+            $products = Product::getDelete($id);
             return redirect(route('index'));
                                                 } 
 
