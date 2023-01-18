@@ -146,6 +146,12 @@ class Product extends Model
 
     public static function getDelete($id){
 
+        if (empty($id)) {
+            \Session::flash('err_msg','データがありません。');
+            return redirect(route('index'));
+    
+                            }
+
         \DB::beginTransaction();
         try{
             DB::beginTransaction();
@@ -156,8 +162,8 @@ class Product extends Model
             }catch(\Throwable $e){
                 abort(500);
 
-        return $product->get();           
-   
+        //return $product->get();           
+        return $product->destroy($id);
                                  }
      
 

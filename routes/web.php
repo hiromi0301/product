@@ -42,8 +42,8 @@ Route::get('/product/edit/{id}', 'ProductController@edit')->name('edit');
 Route::post('/product/update','ProductController@update')->name('update');
 
 //商品削除
-Route::post('/product/delete/{id}','ProductController@delete')->name('delete');
-Auth::routes();
+Route::post('/product/delete/{id}','ProductController@exeDelete')->name('delete');
+//Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 

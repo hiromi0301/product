@@ -11,7 +11,7 @@
       @endif  
 
       <p>検索条件を入力してください</p>
-<form action="{{ url('/serch')}}" method="POST">
+<form action="{{ url('/serch')}}" method="get">
   {{ csrf_field()}}
   {{method_field('get')}}
 
@@ -67,7 +67,7 @@
               <td>{{ $product->stock }}</td>
               <td>{{ $product->company->company_name }}</td>
               <td><button type="button" class="btn btn-primary" onclick="location.href='/product/edit/{{ $product->id }}'">編集</button></td>
-              <form method="POST" action="{{ route('delete',$product->id) }}" onSubmit="return checkDelete()">
+              <form method="POST" action="{{ route('delete', $product->id) }}" onSubmit="return checkDelete()">
               @csrf
               <td><button type="submit" class="btn btn-primary" onclick=>削除</button></td>
           </tr>

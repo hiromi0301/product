@@ -225,7 +225,7 @@ class ProductController extends Controller
      * @param int $id
      * @return view
      */
-    public function delete($id){
+    public function exeDelete($id){
 
         if (empty($id)) {
         \Session::flash('err_msg','データがありません。');
@@ -247,7 +247,8 @@ class ProductController extends Controller
 
             \Session::flash('err_msg','削除しました。');
 
-            $products = Product::getDelete($id);
+            
+            $product = Product::destroy($id);
             return redirect(route('index'));
                                                 } 
 
