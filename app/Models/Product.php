@@ -98,7 +98,14 @@ class Product extends Model
                                     }
                                             }
    
+
+    public static function getEdit($id){
    
+        $product = Product::find($id);
+
+        return $product->get();
+                                                                                        
+                            }
    
    
     public static function getUpdate($request){

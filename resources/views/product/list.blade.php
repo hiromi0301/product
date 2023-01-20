@@ -4,9 +4,9 @@
 <div class="row">
   <div class="col-md-12 col-md-offset-2">
     
-      @if (session('err_msg'))
+      @if (session('message'))
         <p class="text-danger">
-            {{ session('err_msg')}}
+            {{ session('message')}}
         </p>
       @endif  
 

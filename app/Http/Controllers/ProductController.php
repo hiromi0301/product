@@ -8,6 +8,7 @@ use App\Models\Company;
 use App\Models\Sale;
 use App\Http\Requests\ProductRequest;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Config\message;
 
 class ProductController extends Controller
 {
@@ -129,11 +130,13 @@ class ProductController extends Controller
             //\DB::rollback();
             //abort(500);
 
-                                    //}
-       
+                                    //}                            
 
         \Session::flash('err_msg','商品を登録しました');
         $products = Product::getStore($request);
+
+        
+
         return redirect(route('index'));
         
 
@@ -147,7 +150,7 @@ class ProductController extends Controller
      */
     public function edit($id){
    
-        $product = Product::find($id);
+        //$product = Product::find($id);
         
        
         if (is_null($product)) {
@@ -228,8 +231,10 @@ class ProductController extends Controller
     public function exeDelete($id){
 
         if (empty($id)) {
-        \Session::flash('err_msg','データがありません。');
-        return redirect(route('index'));
+       // \Session::flash('err_msg','データがありません。');
+        //return redirect(route('index'));
+        
+        
 
                         }
         
@@ -245,9 +250,21 @@ class ProductController extends Controller
    
                                  //}
 
-            \Session::flash('err_msg','削除しました。');
+            //\Session::flash('err_msg','削除しました。');
+            //echo __("message.delete_msg");
+            //$message = config('const.message.delete');
+          
+
+                $messageKey = 'message';
+                $flashMessage = __('message.delete');    
 
             
+            
+            //$messageKey = 'message';
+            //$flashMessage = __('message.delete');
+
+            //dd($messageKey);
+
             $product = Product::destroy($id);
             return redirect(route('index'));
                                                 } 
