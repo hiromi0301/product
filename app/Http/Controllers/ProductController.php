@@ -112,25 +112,7 @@ class ProductController extends Controller
          
                              }
 
-        //\DB::beginTransaction();
-
-        //try{
-            //商品を登録
-            //Product::create([
-            //'img_path' => $path,
-            //'company_id' => $inputs['company_id'],
-            //'product_name' => $inputs['product_name'],
-            //'price' => $inputs['price'],
-            //'stock' => $inputs['stock'],
-            //'content' => $inputs['content'],
-                              //]);
-
-        //\DB::commit();
-            //} catch(\Throwable $e){
-            //\DB::rollback();
-            //abort(500);
-
-                                    //}                            
+                                 
 
         \Session::flash('err_msg','商品を登録しました');
         $products = Product::getStore($request);
@@ -150,7 +132,6 @@ class ProductController extends Controller
      */
     public function edit($id){
    
-        //$product = Product::find($id);
         
        
         if (is_null($product)) {
@@ -238,28 +219,10 @@ class ProductController extends Controller
 
                         }
         
-        //\DB::beginTransaction();
-        //try{
-            //DB::beginTransaction();
-            //商品を登録
-            //Product::destroy($id);
-            //DB::commit();
-
-            //}catch(\Throwable $e){
-                //abort(500);
-   
-                                 //}
+       
 
             \Session::flash('err_msg',config('message.delete'));
-            //echo __("message.delete_msg");
-            //$message = config('const.message.delete');    
-
-            //dd(config('message.delete'));
-            
-            //$messageKey = 'message';
-            //$flashMessage = __('message.delete');
-
-            //dd($messageKey);
+           
 
             $product = Product::destroy($id);
             return redirect(route('index'));
