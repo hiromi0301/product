@@ -231,8 +231,8 @@ class ProductController extends Controller
     public function exeDelete($id){
 
         if (empty($id)) {
-       // \Session::flash('err_msg','データがありません。');
-        //return redirect(route('index'));
+        \Session::flash('err_msg',config('message.delete_err'));
+        return redirect(route('index'));
         
         
 
@@ -250,15 +250,11 @@ class ProductController extends Controller
    
                                  //}
 
-            //\Session::flash('err_msg','削除しました。');
+            \Session::flash('err_msg',config('message.delete'));
             //echo __("message.delete_msg");
-            //$message = config('const.message.delete');
-          
+            //$message = config('const.message.delete');    
 
-                $messageKey = 'message';
-                $flashMessage = __('message.delete');    
-
-            
+            //dd(config('message.delete'));
             
             //$messageKey = 'message';
             //$flashMessage = __('message.delete');
