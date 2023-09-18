@@ -16,20 +16,16 @@
   {{method_field('get')}}
 
   <div class="form-group">
-    <label>商品名</label>
-    <input type="serch" class="form-control col-md-5" placeholder="検索したい商品名を入力してください" name="product_name">
+    <label>価格</label>
+    <li><input placeholder="上限値を入力" type="text" name="upper"></li>
+    <li><input placeholder="下限値を入力" type="text" name="lower"></li>
   </div>
   <div class="form-group">
-    <label>メーカー名</label>
-    <select class="form-control col-md-5" name="company_id">
-    <option disabled selected>未選択</option>
-    <option value="1" name="company_id">A</option>
-    <option value="2" name="company_id">B</option>
-    <option value="3" name="company_id">C</option>
-    <option value="4" name="company_id">D</option>
-    <option value="5" name="company_id">E</option>
-     </select>
-   </div>
+    <label>在庫数</label>
+    <li><input placeholder="上限値を入力" type="text" name="upper"></li>
+    <li><input placeholder="下限値を入力" type="text" name="lower"></li>
+
+  </div>
 
  <button type="submit" class="btn btn-primary col-md-5">検索</button>
 </form>

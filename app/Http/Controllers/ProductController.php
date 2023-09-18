@@ -9,6 +9,7 @@ use App\Models\Sale;
 use App\Http\Requests\ProductRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Config\message;
+use App\Jobs\TestJob;
 
 class ProductController extends Controller
 {
@@ -29,10 +30,10 @@ class ProductController extends Controller
     
         $products = Product::all();
 
-        return view ("product.list",['products' => $products]);
+        TestJob::dispatch();
 
-    
-       
+        return view ("product.list",['products' => $products]);
+           
         
                              } 
 
@@ -46,6 +47,28 @@ class ProductController extends Controller
 
         $products = Product::getList($request);
         
+        TestJob::dispatch();
+
+        $upper = $request->input('upper'); //最大値
+        $lower = $request->input('lower'); //最小値
+
+            /* 最大値から検索処理 */
+            if(!empty($upper)) {
+    
+                $products->whereHas('products', function ($q)use($upper) {
+                  $q->where('id', '>=',$upper);
+                    })->get();
+          
+                  }
+          /* 最小値から検索処理 */
+              if(!empty($lower)) {
+      
+                $products->whereHas('products', function ($q)use($lower) {
+                  $q->where('id', '<=',$lower);
+                    })->get();
+      
+              }
+
         return view('product.serch', ['products' => $products]);
     
        
@@ -65,7 +88,7 @@ class ProductController extends Controller
         
     if (is_null($product)) {
             
-    \Session::flash('err_msg','データがありません。');
+    \Session::flash('err_msg',config('message.detail'));
           
         return redirect(route('index'));
 
@@ -114,7 +137,7 @@ class ProductController extends Controller
 
                                  
 
-        \Session::flash('err_msg','商品を登録しました');
+        \Session::flash('err_msg',config('message.store'));
         $products = Product::getStore($request);
 
         
@@ -136,7 +159,7 @@ class ProductController extends Controller
        
         if (is_null($product)) {
             
-            \Session::flash('err_msg','データがありません。');
+            \Session::flash('err_msg',config('message.delete_err'));
             return redirect(route('index'));
 
                                 }
@@ -196,7 +219,7 @@ class ProductController extends Controller
                 //throw new \Exception($e->getMessage());
 
                                    //}
-            \Session::flash('err_msg','商品を更新しました');
+            \Session::flash('err_msg',config('message.update'));
             $products = Product::getUpdate($request);
             return redirect(route('index'));
         
