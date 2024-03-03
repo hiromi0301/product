@@ -29,10 +29,11 @@ class ProductController extends Controller
    
     
         $products = Product::all();
+        $products = Product::sortable()->get();
 
         TestJob::dispatch();
 
-        return view ("product.list",['products' => $products]);
+        return view ("product.list",['products' => $products])->with('products', $products);
            
         
                              } 
@@ -48,26 +49,7 @@ class ProductController extends Controller
         $products = Product::getList($request);
         
         TestJob::dispatch();
-
-        $upper = $request->input('upper'); //最大値
-        $lower = $request->input('lower'); //最小値
-
-            /* 最大値から検索処理 */
-            if(!empty($upper)) {
-    
-                $products->whereHas('products', function ($q)use($upper) {
-                  $q->where('id', '>=',$upper);
-                    })->get();
-          
-                  }
-          /* 最小値から検索処理 */
-              if(!empty($lower)) {
-      
-                $products->whereHas('products', function ($q)use($lower) {
-                  $q->where('id', '<=',$lower);
-                    })->get();
-      
-              }
+              
 
         return view('product.serch', ['products' => $products]);
     

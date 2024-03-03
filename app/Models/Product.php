@@ -4,10 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Kyslik\ColumnSortable\Sortable;
+
 
 
 class Product extends Model
 {
+
+    use Sortable;
+
     //テーブル名
     protected $table = 'products';
 
@@ -45,15 +50,27 @@ class Product extends Model
        
         $query = Product::query();
     
-        if(!empty($product_keyword)) {
+        //if(!empty($product_keyword)) {
                         
-            $query->where('product_name', 'LIKE', "%{$product_keyword}%");
-                                      }
+            //$query->where('product_name', 'LIKE', "%{$product_keyword}%");
+                                      //}
 
-        if(!empty($company_keyword)){           
+        //if(!empty($company_keyword)){           
 
-        $query->where('company_id', 'LIKE', "%{$company_keyword}%");
-                                     }
+        //$query->where('company_id', 'LIKE', "%{$company_keyword}%");
+        
+        //}
+
+        $upper = $request->input('upper'); //最大値
+        $lower = $request->input('lower'); //最小値
+
+        /* 最大値から検索処理 */
+            if(!empty($upper)){ $query->where('price', '>=',$upper);}
+
+        /* 最小値から検索処理 */
+          if(!empty($lower)){ $query->where('price', '>=',$lower);}
+
+      
         
             return $query->get();                             
 
