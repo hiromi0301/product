@@ -24,7 +24,7 @@ class SalesController extends Controller
 
                 'result' => false,
                 'error' => [
-                    'messages' => [$e->getMEssage()]
+                    'messages' => [$e->getMessage()]
                 ],
             ];
             return $this->resConversionJson($result, $e->getCode());

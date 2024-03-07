@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\SalesController;
+use App\Http\Controllers\API\SalesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,5 +17,5 @@ use App\Http\Controllers\SalesController;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 
-Route::post('/purchase','SalesController@purchase');
+Route::post('/purchase','SalesController@index');
 });

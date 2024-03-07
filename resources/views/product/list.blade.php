@@ -20,10 +20,21 @@
     <li><input placeholder="上限値を入力" type="text" name="upper"></li>
     <li><input placeholder="下限値を入力" type="text" name="lower"></li>
   </div>
+  
   <div class="form-group">
     <label>在庫数</label>
     <li><input placeholder="上限値を入力" type="text" name="upper"></li>
     <li><input placeholder="下限値を入力" type="text" name="lower"></li>
+
+  <div class="form-group">
+    <label>商品名</label>
+    <li><input placeholder="上限値を入力" type="text" name="upper"></li>
+    <li><input placeholder="下限値を入力" type="text" name="lower"></li>
+
+  <div class="form-group">
+    <label>メーカー名</label>
+    <li><input placeholder="上限値を入力" type="text" name="upper"></li>
+    <li><input placeholder="下限値を入力" type="text" name="lower"></li>  
 
   </div>
 
@@ -72,13 +83,43 @@
   </div>
 </div>
 
-<script>
-function checkDelete(){
-    if(window.confirm('削除してよろしいですか？')){
-        return true;
-    } else {
-        return false;
+<script type="text/javascript">
+
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN':'{{ csrf_token() }}'
     }
+  });
+
+  $(function(){
+    $('.btn-primary').on('click',function()){
+      var deleteConfirm = confirm('削除してよろしいですか？');
+      if(deleteConfirm == true){
+        var clickEle = $(this)
+        var productID = clickEle.attr('data-product_id');
+
+        $.ajax({
+          type: 'POST',
+          url: '/delete'+productID,
+          dataType: 'json',
+          data: {'id':productID},
+        })
+      
+      }else{
+        (function(e){
+          e.preventDefault()
+        });
+      };
+    });
+
+  });
+
+//function checkDelete(){
+  //  if(window.confirm('削除してよろしいですか？')){
+    //    return true;
+   // } else {
+     //   return false;
+  //  }
     }
 </script>
 
