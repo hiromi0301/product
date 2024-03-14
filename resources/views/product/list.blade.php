@@ -20,7 +20,7 @@
     <li><input placeholder="上限値を入力" type="text" name="upper"></li>
     <li><input placeholder="下限値を入力" type="text" name="lower"></li>
   </div>
-  
+
   <div class="form-group">
     <label>在庫数</label>
     <li><input placeholder="上限値を入力" type="text" name="upper"></li>
@@ -28,13 +28,11 @@
 
   <div class="form-group">
     <label>商品名</label>
-    <li><input placeholder="上限値を入力" type="text" name="upper"></li>
-    <li><input placeholder="下限値を入力" type="text" name="lower"></li>
+    <li><input placeholder="商品名を入力" type="text" name="product_name"></li>
 
   <div class="form-group">
     <label>メーカー名</label>
-    <li><input placeholder="上限値を入力" type="text" name="upper"></li>
-    <li><input placeholder="下限値を入力" type="text" name="lower"></li>  
+    <li><input placeholder="メーカー名を入力" type="text" name="company_name"></li>  
 
   </div>
 

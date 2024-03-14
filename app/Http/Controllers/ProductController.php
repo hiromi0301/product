@@ -139,7 +139,7 @@ class ProductController extends Controller
    
         
        
-        if (is_null($product)) {
+        if (is_null($id)) {
             
             \Session::flash('err_msg',config('message.delete_err'));
             return redirect(route('index'));
