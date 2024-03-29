@@ -27,11 +27,16 @@
             <div class="form-group">
                 <label for="company_name">{{ __('メーカー') }}<span class="badge badge-danger ml-2">{{ __('必須') }}</span></label>
                     <select class="form-control" id="company_id" name="company_id">
-                        <option value="1" name="company_id">A</option>
-                        <option value="2" name="company_id">B</option>
-                        <option value="3" name="company_id">C</option>
-                        <option value="4" name="company_id">D</option>
-                        <option value="5" name="company_id">E</option>
+                        <!--option value="1" name="company_id">A</option-->
+                        <!--option value="2" name="company_id">B</option-->
+                        <!--option value="3" name="company_id">C</option-->
+                        <!--option value="4" name="company_id">D</option-->
+                        <!--option value="5" name="company_id">E</option-->
+                        @foreach($companies as $company)
+                        if (isset($company)
+                        <option value="{{ $company->company_id }}">{{ $company->company_name }}</option>
+                        @endforeach
+
                     </select>
                 @if ($errors->has('company_name'))
                     <div class="text-danger">

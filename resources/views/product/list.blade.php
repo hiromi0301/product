@@ -89,8 +89,9 @@
     }
   });
 
-  $(function(){
-    $('.btn-primary').on('click',function()){
+  $(function(e){
+    e.preventDefault(),
+    $('.btn-primary').on('click',function(){
       var deleteConfirm = confirm('削除してよろしいですか？');
       if(deleteConfirm == true){
         var clickEle = $(this)
@@ -118,7 +119,7 @@
    // } else {
      //   return false;
   //  }
-    }
+   // }
 </script>
 
 @endsection
