@@ -29,7 +29,7 @@ class ProductRequest extends FormRequest
             'price' => 'required',
             'stock' => 'required',
             'company_id' => 'required_without:company_name',
-           // 'company_name' => 'required_without:company_id'
+            'company_name' => 'required_without:company_id'
         ];
     }
 }

@@ -89,9 +89,14 @@ class ProductController extends Controller
 
 
     public function create(Request $request) {
+
+        $inputs = $request-> all();
+        $companies =Company::all();
+        //$companies = Company::sortable()->get();
+
         
         
-        return   view('product.form');
+        return   view('product.form',['companies' => $companies])->with('companies', $companies);
                                               }
 
 

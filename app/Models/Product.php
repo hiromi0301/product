@@ -84,6 +84,8 @@ class Product extends Model
       
         $product = new Product;
 
+        $companies = $request->all(); 
+
         $img = $request->img_path->getClientOriginalName();
 
         if (!is_null($img)) {
@@ -111,6 +113,7 @@ class Product extends Model
             abort(500);
 
             return $product->get(); 
+            return $company->get();
 
                                     }
                                             }
