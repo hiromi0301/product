@@ -34,7 +34,7 @@
                         <!--option value="5" name="company_id">E</option-->
                         @foreach($companies as $company)
                         if (isset($company)
-                        <option value="{{ $company->company_id }}">{{ $company->company_name }}</option>
+                        <option value="{{ $company->id }}">{{ $company->company_name }}</option>
                         @endforeach
 
                     </select>

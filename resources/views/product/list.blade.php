@@ -32,11 +32,18 @@
 
   <div class="form-group">
     <label>メーカー名</label>
-    <li><input placeholder="メーカー名を入力" type="text" name="company_name"></li>  
+   <!--li><input placeholder="選択してください" type="text" name="company_name"></li--> 
+    <select class="form-control" id="company_id" name="company_name"> 
+    @foreach($companies as $company)
+                        if (isset($company)
+                        <option value="{{ $company->id }}">{{ $company->company_name }}</option>
+                        @endforeach
+
+    </select>
 
   </div>
 
- <button type="submit" class="btn btn-primary col-md-5">検索</button>
+ <button type="submit" class="btn serch-btn col-md-5">検索</button>
 </form>
 @if(session('flash_message'))
 <div class="alert alert-primary" role="alert" style="margin-top:50px;">{{ session('flash_message')}}</div>
@@ -46,7 +53,7 @@
 
 
 <h2>商品一覧</h2>
-
+  <tbody>  
       <table class="table table-striped">
           <tr>
               <th scope="col">@sortablelink('id','商品番号')</th>
@@ -76,33 +83,64 @@
               @csrf
               <td><button type="submit" class="btn btn-primary" onclick=>削除</button></td>
           </tr>
-          @endforeach
+            @endforeach
+        </tbody>
       </table>
   </div>
 </div>
 
 <script type="text/javascript">
 
-  $.ajaxSetup({
-    headers: {
-      'X-CSRF-TOKEN':'{{ csrf_token() }}'
-    }
-  });
+$(function(){
 
-  $(function(e){
-    e.preventDefault(),
+  $('#sort-table').tablesorter();
+})
+
+$.ajaxSetup({
+  headers: {
+      'X-CSRF-TOKEN':'{{ csrf_token() }}'
+  }
+});
+
+  $(function(){
+    $('.serch-btn').on('click',function(e){
+      e.preventDefault();
+        var clickEle = $(this)
+        var productID = clickEle.attr('data-product_id');
+        let serchData = $('#serch-form').serialize();
+        
+        $.ajax({
+          type:'get',
+          url:'serch',
+          dataType:'html',
+          data:serchData,
+        }).done(function(data){
+            let newTable = $(data).find('#products-table')
+      })
+    })    
+      
+  $function(e){
+    e.preventDefault();
     $('.btn-primary').on('click',function(){
       var deleteConfirm = confirm('削除してよろしいですか？');
       if(deleteConfirm == true){
         var clickEle = $(this)
-        var productID = clickEle.attr('data-product_id');
-
+        var productID =clickEle.attr('data-product_id');
+        
         $.ajax({
-          type: 'POST',
-          url: '/delete'+productID,
-          dataType: 'json',
-          data: {'id':productID},
+          type:'POST',
+          url:'/product/delete/'+productID,
+          dataType:'html',
+          data:{'id':productID},
+
+        }).done(function(data){
+          clickEle.parents('tr').remove();
         })
+      
+      }
+    })
+  }  
+
       
       }else{
         (function(e){

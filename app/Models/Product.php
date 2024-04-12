@@ -36,12 +36,14 @@ class Product extends Model
     return $this->belongsTo('App\Models\Company');
     }
 
+
     public function getData(){
 
         $data = DB::table($this->table)->get();
 
         return $data;
-                              }
+    }
+
 
     public static function getList($request){
 
@@ -50,29 +52,43 @@ class Product extends Model
        
         $query = Product::query();
     
-        //if(!empty($product_keyword)) {
+        if(!empty($product_keyword)) {
                         
-            //$query->where('product_name', 'LIKE', "%{$product_keyword}%");
-                                      //}
-
-        //if(!empty($company_keyword)){           
-
-        //$query->where('company_id', 'LIKE', "%{$company_keyword}%");
+        $query->where('product_name', 'LIKE', "%{$product_keyword}%");
         
-        //}
+        }
 
-        $upper = $request->input('upper'); //最大値
-        $lower = $request->input('lower'); //最小値
+        if(!empty($company_keyword)){           
 
-        /* 最大値から検索処理 */
-            if(!empty($upper)){ $query->where('price', '>=',$upper);}
-
-        /* 最小値から検索処理 */
-          if(!empty($lower)){ $query->where('price', '>=',$lower);}
-
-      
+        $query->where('company_id', '=', "%{$company_keyword}%");
         
-            return $query->get();                             
+        }
+
+        $price_upper = $request->input('price_upper'); //価格最大値
+        $price_lower = $request->input('proce_lower'); //価格最小値
+
+        $stock_upper = $request->input('stock_upper'); //在庫数最大値
+        $stock_lower = $request->input('stock_lower'); //在庫数最小値
+
+
+        /* 価格最大値から検索処理 */
+        if(!empty($price_upper)){ $query->where('price', '>=',$price_upper);
+        }
+
+        /* 価格最小値から検索処理 */
+        if(!empty($price_lower)){ $query->where('price', '<=',$price_lower);
+        }
+
+
+        /* 在庫数最大値から検索処理 */
+        if(!empty($stock_upper)){ $query->where('stock', '>=',$stock_upper);
+        }
+
+        /* 在庫数最小値から検索処理 */
+        if(!empty($stock_lower)){ $query->where('stock', '<=',$stock_lower);
+        }
+        
+        return $query->get();                             
 
     }                         
 
@@ -85,38 +101,8 @@ class Product extends Model
         $product = new Product;
 
         $companies = $request->all(); 
-
-        $img = $request->img_path->getClientOriginalName();
-
-        if (!is_null($img)) {
-
-            $path = $request->img_path->storeAs('',$img,'public');
-                            }
-
-
-        \DB::beginTransaction();
-
-        try{
-            //商品を登録
-            Product::create([
-            'img_path' => $path,
-            'company_id' => $inputs['company_id'],
-            'product_name' => $inputs['product_name'],
-            'price' => $inputs['price'],
-            'stock' => $inputs['stock'],
-            'content' => $inputs['content'],
-                              ]);
-
-        \DB::commit();
-            } catch(\Throwable $e){
-            \DB::rollback();
-            abort(500);
-
-            return $product->get(); 
-            return $company->get();
-
-                                    }
-                                            }
+    
+    }
    
 
     public static function getEdit($id){
@@ -125,50 +111,18 @@ class Product extends Model
 
         return $product->get();
                                                                                         
-                            }
+    }
    
    
     public static function getUpdate($request){
         
-        
         $inputs = $request->all();
 
-
         $product = new Product;
-
-        $img = $request->img_path->getClientOriginalName();
-      
-        if (!is_null($img)) {
-
-            $path = $request->img_path->storeAs('',$img,'public');
-         
-                             }
         
-        \DB::beginTransaction();
-        try{
-        $product = Product::find($inputs['id']);
-        $product->fill([
-            'product_name' => $inputs['product_name'],
-            'content' => $inputs['content'],
-            'price' => $inputs['price'],    
-            'stock' => $inputs['stock'],
-            'company_id' => $inputs['company_id'],
-            'img_path' => $path,
-                  
-                        ]);
-        $product->save();
-        \DB::commit();
-        
-        } catch(\Throwable $e){
-            \DB::rollback();
-            throw new \Exception($e->getMessage());
-
-                               }
-        \Session::flash('err_msg','商品を更新しました');
-        //return redirect(route('index'));
-          return $product->get();               
-                                                }
-
+        return $product->get();               
+    
+    }
     
 
     public static function getDelete($id){
@@ -177,25 +131,25 @@ class Product extends Model
             \Session::flash('err_msg','データがありません。');
             return redirect(route('index'));
     
-                            }
+        }
 
-        \DB::beginTransaction();
-        try{
-            DB::beginTransaction();
+        //\DB::beginTransaction();
+        //try{
+           // DB::beginTransaction();
             //商品を登録
-            Product::destroy($id);
-            DB::commit();
+           // Product::destroy($id);
+           // DB::commit();
 
-            }catch(\Throwable $e){
-                abort(500);
+          //  }catch(\Throwable $e){
+            //    abort(500);
 
         //return $product->get();           
         return $product->destroy($id);
-                                 }
+                               //  }
      
 
 
-                                                }
+    }
 
 
 

@@ -12,14 +12,14 @@
 
   <div class="form-group">
     <label>価格</label>
-    <li><input placeholder="上限値を入力" type="text" name="upper"></li>
-    <li><input placeholder="下限値を入力" type="text" name="lower"></li>
+    <li><input placeholder="上限値を入力" type="text" name="price_upper"></li>
+    <li><input placeholder="下限値を入力" type="text" name="price_lower"></li>
   </div>
   
   <div class="form-group">
     <label>在庫数</label>
-    <li><input placeholder="上限値を入力" type="text" name="upper"></li>
-    <li><input placeholder="下限値を入力" type="text" name="lower"></li>
+    <li><input placeholder="上限値を入力" type="text" name="stock_upper"></li>
+    <li><input placeholder="下限値を入力" type="text" name="stock_lower"></li>
 
   <div class="form-group">
     <label>商品名</label>
@@ -27,11 +27,16 @@
 
   <div class="form-group">
     <label>メーカー名</label>
-    <li><input placeholder="メーカー名を入力" type="text" name="company_name"></li>  
+    <select class="form-control" id="company_id" name="company_id"> 
+    @foreach($companies as $company)
+                        if (isset($company)
+                        <option value="{{ $company->id }}">{{ $company->company_name }}</option>
+    @endforeach
 
+    </select>
   </div>
 
-  <button type="submit" class="btn btn-primary col-md-5">検索</button>
+  <button type="submit" class="btn serch-btn col-md-5">検索</button>
 </form>
 @if(session('flash_message'))
 <div class="alert alert-primary" role="alert" style="margin-top:50px;">{{ session('flash_message')}}</div>
