@@ -11,7 +11,7 @@
       @endif  
 
       <p>検索条件を入力してください</p>
-<form action="{{ url('/serch')}}" method="get">
+<form id="serch-form" action="{{ url('/serch')}}" method="get">
   {{ csrf_field()}}
   {{method_field('get')}}
 
@@ -40,10 +40,10 @@
                         @endforeach
 
     </select>
-
+    
   </div>
 
- <button type="submit" class="btn serch-btn col-md-5">検索</button>
+ <button type="submit" class="btn serch-btn  col-md-5">検索</button>
 </form>
 @if(session('flash_message'))
 <div class="alert alert-primary" role="alert" style="margin-top:50px;">{{ session('flash_message')}}</div>
@@ -52,10 +52,10 @@
 
 
 
-<h2>商品一覧</h2>
-  <tbody>  
-      <table class="table table-striped">
-          <tr>
+<h2>商品一覧</h2> 
+      <table class="tablesorter" id="sort_table">
+        <thead>    
+        <tr>
               <th scope="col">@sortablelink('id','商品番号')</th>
               <th scope="col">@sortablelink('img_path','商品画像')</th>
               <th scope="col">@sortablelink('name','商品名')</th>
@@ -67,10 +67,11 @@
               
               
               
-          </tr>
+        </tr>
           @foreach( $products as $product )
-          
-       
+        </thead>
+
+        <tbody>
           <tr>
               <td>{{ $product->id }}</td>
               <td><img src="{{ asset('storage/'.$product->img_path) }}" width="100px"></td>
@@ -81,7 +82,7 @@
               <td><button type="button" class="btn btn-primary" onclick="location.href='/product/edit/{{ $product->id }}'">編集</button></td>
               <form method="POST" action="{{ route('delete', $product->id) }}" onSubmit="return checkDelete()">
               @csrf
-              <td><button type="submit" class="btn btn-primary" onclick=>削除</button></td>
+              <td><button type="submit" class="btn data-delete" onclick=>削除</button></td>
           </tr>
             @endforeach
         </tbody>
@@ -89,11 +90,13 @@
   </div>
 </div>
 
-<script type="text/javascript">
+<script type="text/javascript" 
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/jquery.tablesorter.min.js">
+
 
 $(function(){
 
-  $('#sort-table').tablesorter();
+  $(".sort_table").tablesorter();
 })
 
 $.ajaxSetup({
@@ -106,7 +109,6 @@ $.ajaxSetup({
     $('.serch-btn').on('click',function(e){
       e.preventDefault();
         var clickEle = $(this)
-        var productID = clickEle.attr('data-product_id');
         let serchData = $('#serch-form').serialize();
         
         $.ajax({
@@ -115,17 +117,18 @@ $.ajaxSetup({
           dataType:'html',
           data:serchData,
         }).done(function(data){
-            let newTable = $(data).find('#products-table')
+            let newTable = $(data).find('#serch-data')
+            return redirect(route('serch')); 
       })
     })    
       
-  $function(e){
+  $(function(){
     e.preventDefault();
     $('.btn-primary').on('click',function(){
       var deleteConfirm = confirm('削除してよろしいですか？');
       if(deleteConfirm == true){
         var clickEle = $(this)
-        var productID =clickEle.attr('data-product_id');
+        var productID =clickEle.attr('data-delete');
         
         $.ajax({
           type:'POST',
@@ -136,14 +139,13 @@ $.ajaxSetup({
         }).done(function(data){
           clickEle.parents('tr').remove();
         })
-      
       }
     })
-  }  
+  
 
       
-      }else{
-        (function(e){
+  }else{
+        (function(){
           e.preventDefault()
         });
       };
