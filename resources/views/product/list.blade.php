@@ -93,12 +93,6 @@
 <script type="text/javascript" 
   src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/jquery.tablesorter.min.js">
 
-
-$(function(){
-
-  $(".sort_table").tablesorter();
-})
-
 $.ajaxSetup({
   headers: {
       'X-CSRF-TOKEN':'{{ csrf_token() }}'
