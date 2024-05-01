@@ -48,7 +48,7 @@ class ProductController extends Controller{
         
         TestJob::dispatch();
               
-        return view('product.serch', ['products' => $products],['companies' => $companies]);
+        return view('product.list', ['products' => $products],['companies' => $companies]);
         
     } 
 
@@ -149,6 +149,7 @@ class ProductController extends Controller{
     public function edit($id){
 
         $product = Product::find($id);
+        $companies =Company::all();
        
         if (is_null($id)){
             
@@ -158,7 +159,7 @@ class ProductController extends Controller{
         }
 
         return view('product.edit',
-        ['product' => $product]);
+        ['companies' => $companies],['product' => $product]);
 
     } 
 
@@ -175,6 +176,7 @@ class ProductController extends Controller{
         $inputs = $request->all();
 
         $product = new Product;
+        $company = new Company;
 
         $img = $request->img_path->getClientOriginalName();
       
@@ -198,7 +200,15 @@ class ProductController extends Controller{
                   
             ]);
         
-        $product->save();
+            $product->save();
+       
+            $company = Company::find($inputs['id']);
+                $company->fill([
+                    'company_id' => $inputs['company_id'],
+                ]);
+            $company->save();        
+
+
         \DB::commit();
         
         } catch(\Throwable $e){
@@ -209,6 +219,7 @@ class ProductController extends Controller{
         \Session::flash('err_msg','商品を更新しました');
 
         $products = Product::getUpdate($request);
+        $companies = Company::getUpdate($request);
         return redirect(route('index'));
         
     }

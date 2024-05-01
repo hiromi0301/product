@@ -17,27 +17,29 @@
 
   <div class="form-group">
     <label>価格</label>
-    <li><input placeholder="上限値を入力" type="text" name="upper"></li>
-    <li><input placeholder="下限値を入力" type="text" name="lower"></li>
+    <li><input placeholder="上限値を入力" type="text" name="price_upper"></li>
+    <li><input placeholder="下限値を入力" type="text" name="price_lower"></li>
   </div>
 
   <div class="form-group">
     <label>在庫数</label>
-    <li><input placeholder="上限値を入力" type="text" name="upper"></li>
-    <li><input placeholder="下限値を入力" type="text" name="lower"></li>
+    <li><input placeholder="上限値を入力" type="text" name="stock_upper"></li>
+    <li><input placeholder="下限値を入力" type="text" name="stock_lower"></li>
+  </div>  
 
   <div class="form-group">
     <label>商品名</label>
     <li><input placeholder="商品名を入力" type="text" name="product_name"></li>
+  </div>
 
   <div class="form-group">
     <label>メーカー名</label>
    <!--li><input placeholder="選択してください" type="text" name="company_name"></li--> 
     <select class="form-control" id="company_id" name="company_name"> 
     @foreach($companies as $company)
-                        if (isset($company)
-                        <option value="{{ $company->id }}">{{ $company->company_name }}</option>
-                        @endforeach
+      <option value="{{ $company->id }}">{{ $company->company_name }}
+      </option>
+    @endforeach
 
     </select>
     
@@ -54,6 +56,7 @@
 
 <h2>商品一覧</h2> 
       <table class="tablesorter" id="sort_table">
+        <div id='serch-data' >
         <thead>    
         <tr>
               <th scope="col">@sortablelink('id','商品番号')</th>
@@ -68,8 +71,8 @@
               
               
         </tr>
-          @foreach( $products as $product )
         </thead>
+          @foreach( $products as $product )
 
         <tbody>
           <tr>
@@ -85,13 +88,13 @@
               <td><button type="submit" class="btn data-delete" onclick=>削除</button></td>
           </tr>
             @endforeach
+        </div>
         </tbody>
       </table>
   </div>
 </div>
 
-<script type="text/javascript" 
-  src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/jquery.tablesorter.min.js">
+<script type="text/javascript">
 
 $.ajaxSetup({
   headers: {
@@ -112,13 +115,12 @@ $.ajaxSetup({
           data:serchData,
         }).done(function(data){
             let newTable = $(data).find('#serch-data')
-            return redirect(route('serch')); 
-      })
+            $('#serch-data').replaceWith(newTable); 
+        })
     })    
       
-  $(function(){
-    e.preventDefault();
     $('.btn-primary').on('click',function(){
+      e.preventDefault();
       var deleteConfirm = confirm('削除してよろしいですか？');
       if(deleteConfirm == true){
         var clickEle = $(this)
@@ -132,18 +134,13 @@ $.ajaxSetup({
 
         }).done(function(data){
           clickEle.parents('tr').remove();
-        })
-      }
-    })
-  
-
+        }) 
       
-  }else{
+      }else{
         (function(){
           e.preventDefault()
-        });
-      };
-    });
+      });
+    };
 
   });
 

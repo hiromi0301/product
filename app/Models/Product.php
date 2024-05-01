@@ -50,7 +50,7 @@ class Product extends Model
     public static function getList($request){
 
         $product_keyword = $request->product_name;
-        $company_keyword = $request->company_id;
+        $company_keyword = $request->company_name;
        
         $query = Product::query();
     
@@ -62,7 +62,7 @@ class Product extends Model
 
         if(!empty($company_keyword)){           
 
-        $query->where('company_id', '=', "%{$company_keyword}%");
+        $query->where('company_id', '=', $company_keyword);
         
         }
 
@@ -74,20 +74,20 @@ class Product extends Model
 
 
         /* 価格最大値から検索処理 */
-        if(!empty($price_upper)){ $query->where('price', '>=',$price_upper);
+        if(!empty($price_upper)){ $query->where('price', '<=',$price_upper);
         }
 
         /* 価格最小値から検索処理 */
-        if(!empty($price_lower)){ $query->where('price', '<=',$price_lower);
+        if(!empty($price_lower)){ $query->where('price', '>=',$price_lower);
         }
 
 
         /* 在庫数最大値から検索処理 */
-        if(!empty($stock_upper)){ $query->where('stock', '>=',$stock_upper);
+        if(!empty($stock_upper)){ $query->where('stock', '<=',$stock_upper);
         }
 
         /* 在庫数最小値から検索処理 */
-        if(!empty($stock_lower)){ $query->where('stock', '<=',$stock_lower);
+        if(!empty($stock_lower)){ $query->where('stock', '>=',$stock_lower);
         }
         
         return $query->get();                             

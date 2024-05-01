@@ -25,14 +25,15 @@
                 @endif
             </div>
             <div class="form-group">
-                <label for="company_name">{{ __('メーカー') }}<span class="badge badge-danger ml-2">{{ __('必須') }}</span></label>
-                    <select class="form-control" id="company_id" name="company_id">
-                        <option value="1">A</option>
-                        <option value="2">B</option>
-                        <option value="3">C</option>
-                        <option value="4">D</option>
-                        <option value="5">E</option>
-                    </select>
+            <label>メーカー名</label>
+            <!--li><input placeholder="選択してください" type="text" name="company_name"></li--> 
+            <select class="form-control" id="company_id" name="company_name"> 
+                @foreach($companies as $company)
+                <option value="{{ $company->id }}">{{ $company->company_name }}
+                </option>
+                @endforeach
+
+            </select>
                 @if ($errors->has('company_name'))
                     <div class="text-danger">
                         {{ $errors->first('company_name') }}
