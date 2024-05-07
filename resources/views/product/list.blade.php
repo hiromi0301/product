@@ -55,8 +55,8 @@
 
 
 <h2>商品一覧</h2> 
+  <div id='serch-data' >
       <table class="tablesorter" id="sort_table">
-        <div id='serch-data' >
         <thead>    
         <tr>
               <th scope="col">@sortablelink('id','商品番号')</th>
@@ -88,9 +88,11 @@
               <td><button type="submit" class="btn data-delete" onclick=>削除</button></td>
           </tr>
             @endforeach
-        </div>
+        
         </tbody>
       </table>
+      
+  </div>    
   </div>
 </div>
 
@@ -150,7 +152,7 @@ $.ajaxSetup({
    // } else {
      //   return false;
   //  }
-   // }
+   });
 </script>
 
 @endsection

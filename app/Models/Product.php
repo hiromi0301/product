@@ -67,7 +67,7 @@ class Product extends Model
         }
 
         $price_upper = $request->input('price_upper'); //価格最大値
-        $price_lower = $request->input('proce_lower'); //価格最小値
+        $price_lower = $request->input('price_lower'); //価格最小値
 
         $stock_upper = $request->input('stock_upper'); //在庫数最大値
         $stock_lower = $request->input('stock_lower'); //在庫数最小値
@@ -116,13 +116,16 @@ class Product extends Model
     }
    
    
-    public static function getUpdate($request){
+    public static function getUpdate($request,$product){
         
         $inputs = $request->all();
 
         $product = new Product;
+        $company = new Company;
         
-        return $product->get();               
+
+        return $product->get();    
+        return $company->get();
     
     }
     

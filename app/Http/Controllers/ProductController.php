@@ -176,7 +176,7 @@ class ProductController extends Controller{
         $inputs = $request->all();
 
         $product = new Product;
-        $company = new Company;
+        $company =Company::all();
 
         $img = $request->img_path->getClientOriginalName();
       
@@ -202,11 +202,11 @@ class ProductController extends Controller{
         
             $product->save();
        
-            $company = Company::find($inputs['id']);
-                $company->fill([
-                    'company_id' => $inputs['company_id'],
-                ]);
-            $company->save();        
+          //  $company = Company::find($inputs['id']);
+             //   $company->fill([
+               //     'company_id' => $inputs['company_id'],
+              //  ]);
+           // $company->save();        
 
 
         \DB::commit();
@@ -219,7 +219,7 @@ class ProductController extends Controller{
         \Session::flash('err_msg','商品を更新しました');
 
         $products = Product::getUpdate($request);
-        $companies = Company::getUpdate($request);
+       // $companies = Company::getUpdate($request);
         return redirect(route('index'));
         
     }
@@ -252,7 +252,8 @@ class ProductController extends Controller{
         \Session::flash('err_msg',config('message.delete'));
        
         $product = Product::destroy($id);
-       
+
+        
         return redirect(route('index'));
  
            
