@@ -238,7 +238,6 @@ class ProductController extends Controller{
         
         }
 
-        \DB::beginTransaction();
         try{
             DB::beginTransaction();
             //商品を削除
@@ -251,8 +250,6 @@ class ProductController extends Controller{
         
         \Session::flash('err_msg',config('message.delete'));
        
-        $product = Product::destroy($id);
-
         
         return redirect(route('index'));
  

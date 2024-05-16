@@ -78,14 +78,12 @@
           <tr>
               <td>{{ $product->id }}</td>
               <td><img src="{{ asset('storage/'.$product->img_path) }}" width="100px"></td>
-              <td><a href="/product/{{ $product->id }}">{{ $product->product_name }}</a></td>
+              <td><a href="{{ route('detail',['id' => $product->id]) }}">{{ $product->product_name }}</a></td>
               <td>{{ $product->price }}</td>
               <td>{{ $product->stock }}</td>
               <td>{{ $product->company->company_name }}</td>
-              <td><button type="button" class="btn btn-primary" onclick="location.href='/product/edit/{{ $product->id }}'">編集</button></td>
-              <form method="POST" action="{{ route('delete', $product->id) }}" onSubmit="return checkDelete()">
-              @csrf
-              <td><button type="submit" class="btn data-delete" onclick=>削除</button></td>
+              <td><button type="button" class="btn btn-primary" onclick="location.href='{{ route('edit',['id' => $product->id]) }}'">編集</button></td>
+              <td><button type="button" class="btn data-delete" data-delete="{{ $product->id }}">削除</button></td>
           </tr>
             @endforeach
         
@@ -121,7 +119,7 @@ $.ajaxSetup({
         })
     })    
       
-    $('.btn-primary').on('click',function(){
+    $('.data-delete').on('click',function(e){
       e.preventDefault();
       var deleteConfirm = confirm('削除してよろしいですか？');
       if(deleteConfirm == true){
@@ -130,7 +128,7 @@ $.ajaxSetup({
         
         $.ajax({
           type:'POST',
-          url:'/product/delete/'+productID,
+          url:'product/delete/'+productID,
           dataType:'html',
           data:{'id':productID},
 
