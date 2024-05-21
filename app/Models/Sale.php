@@ -8,21 +8,11 @@ use App\Modele\Sale;
 
 class Sales extends Model
 {
-    use HasFactory;
+    protected $fillable = ['product_id', ]; 
 
-    protected $table = 'sales';
-    protected $dates = ['created_at','updated_at'];
-    protected $fillable = ['id', 'product_id'];
-
-    public function dec(){
-        $sales = DB::table('sales')
-        ->where('product_id')
-        ->join('products','sales.product_id','=','producys.id')
-        ->decrement('stock',1);
-    
-        return $sales;
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
     }
-    
-
 
 }

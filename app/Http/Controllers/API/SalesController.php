@@ -8,35 +8,30 @@ use App\Models\Sale;
 
 class SalesController extends Controller
 {
-    public function index()
+    public function purchase(Request $request)
     {
-        try{
-            $version = Ver::first();
-            $result = [
-                
-                'result' => true,
-                'version' => $version->version,
-                'min_version' => $version->min_version
+        $productId = $request->input('product_id');
+        $quantity = $request->input('quantity', 1);
 
-            ];
-        } catch(\Exception $e){
-            $result = [
-
-                'result' => false,
-                'error' => [
-                    'messages' => [$e->getMssage()]
-                ],
-            ];
-            return $this->resConversionJson($result, $e->getCode());
+        $product = Product::find($productId); 
+    
+        if (!$product) {
+            return response()->json(['message' => '商品が存在しません'], 404);
         }
-        return $this->resConversionJson($result);
-    }
-
-    private function resConversionJson($result,$statusCode=200)
-    {
-        if(empty($statusCode) || $statusCode < 100 || $statusCode >= 600){
-            $statusCode = 500;
+        if ($product->stock < $quantity) {
+            return response()->json(['message' => '商品が在庫不足です'], 400);
         }
-        return response()->json($result,$statusCode,['Content-Type' => 'application/json'], JSON_UNESCAPED_SLASHES);
+    
+        $product->stock -= $quantity; 
+        $product->save();
+    
+    
+        $sale = new Sale([
+            'product_id' => $productId,
+        ]);
+    
+        $sale->save();
+    
+        return response()->json(['message' => '購入成功']);
     }
 }
