@@ -13,13 +13,14 @@ class SalesController extends Controller
         $productId = $request->input('product_id');
         $quantity = $request->input('quantity', 1);
 
-        $product = Product::find($productId); 
+        $id = $request->input('product_id');
+        $product = $productId->getProductById($id); 
     
         if (!$product) {
-            return response()->json(['message' => '商品が存在しません'], 404);
+            return response()->json(['message' => '商品が存在しません']);
         }
         if ($product->stock < $quantity) {
-            return response()->json(['message' => '商品が在庫不足です'], 400);
+            return response()->json(['message' => '商品が在庫不足です']);
         }
     
         $product->stock -= $quantity; 
@@ -33,5 +34,6 @@ class SalesController extends Controller
         $sale->save();
     
         return response()->json(['message' => '購入成功']);
+        return response()->json($sale);
     }
 }
