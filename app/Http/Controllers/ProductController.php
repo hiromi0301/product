@@ -28,7 +28,7 @@ class ProductController extends Controller{
         $products = Product::sortable()->get();
         $companies =Company::all();
 
-        TestJob::dispatch();
+        //TestJob::dispatch();
 
         return view ("product.list",['products' => $products],['companies' => $companies])->with('products', $products);
             

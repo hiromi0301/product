@@ -18,7 +18,8 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+  //  return $request->user();
 
-Route::post('/purchase','SalesController@purchase');
 });
+
+Route::post('/purchase',[SalesController::class, 'purchase'])->name('sales.purchase');
