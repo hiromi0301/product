@@ -19,6 +19,7 @@ class SalesController extends Controller
         //$product = $productId->getProductById($id); 
         $product = Product::find($productId);
         //$product = Product::all();
+        $stock = $request->input('product_stock');
 
         if (!$product) {
             return response()->json(['message' => '商品が存在しません']);
