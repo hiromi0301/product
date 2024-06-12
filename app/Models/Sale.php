@@ -4,15 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Product;
-use App\Modele\Sale;
+use App\Models\Sale;
 
-class Sales extends Model
+class Sale extends Model
 {
-    protected $fillable = ['product_id', ]; 
+    use HasFactory;
+    
+    protected $table = 'sale';
+    protected $dates = ['created_at','updated_at'];
+    protected $fillable = ['product_id'];
+
+
 
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo('App\Models\Product');
     }
 
 }
