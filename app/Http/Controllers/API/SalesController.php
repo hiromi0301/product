@@ -4,9 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Sales;
+use App\Models\Sale;
 use App\Models\Product;
-use App\Http\Requests\ProductRequest;
+
 
 class SalesController extends Controller
 {
@@ -14,10 +14,12 @@ class SalesController extends Controller
     {
         //$productId = new product;
         $quantity = $request->input('quantity', 1);
-
         $id = $request->input('product_id');
+        
+        return response()->json($id);
         //$product = $productId->getProductById($id); 
         $product = Product::find($id);
+        //return response()->json($product);
         //$product = Product::all();
         $stock = $request->input('product_stock');
 
