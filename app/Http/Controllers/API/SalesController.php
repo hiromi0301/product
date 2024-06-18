@@ -16,7 +16,7 @@ class SalesController extends Controller
         $quantity = $request->input('quantity', 1);
         $id = $request->input('product_id');
         
-        return response()->json($id);
+        //return response()->json($id);
         //$product = $productId->getProductById($id); 
         $product = Product::find($id);
         //return response()->json($product);
@@ -26,7 +26,7 @@ class SalesController extends Controller
         if (!$product) {
             return response()->json(['message' => '商品が存在しません']);
         }
-        if ($product->stock -= $quantity) {
+        if ($product->stock <= 0) {
             return response()->json(['message' => '商品が在庫不足です']);
         }
     

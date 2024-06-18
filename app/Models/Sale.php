@@ -8,9 +8,10 @@ use App\Models\Sale;
 
 class Sale extends Model
 {
-    use HasFactory;
+    //use HasFactory;
+    //use Sortable;
     
-    protected $table = 'sale';
+    protected $table = 'sales';
     //protected $dates = ['created_at','updated_at'];
     protected $fillable = ['product_id','created_at','updated_at'
 ];
