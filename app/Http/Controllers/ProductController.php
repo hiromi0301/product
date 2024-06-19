@@ -46,7 +46,7 @@ class ProductController extends Controller{
         $companies =Company::all();
         
         
-        TestJob::dispatch();
+        //TestJob::dispatch();
               
         return view('product.list', ['products' => $products],['companies' => $companies]);
         
