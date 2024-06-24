@@ -83,7 +83,7 @@
               <td>{{ $product->stock }}</td>
               <td>{{ $product->company->company_name }}</td>
               <td><button type="button" class="btn btn-primary" onclick="location.href='{{ route('edit',['id' => $product->id]) }}'">編集</button></td>
-              <td><button type="button" class="btn data-delete" data-delete="{{ $product->id }}">削除</button></td>
+              <td><button type="button" class="btn data-delete" onclick="data-delete={{ $product->id }}">削除</button></td>
           </tr>
             @endforeach
         

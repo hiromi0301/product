@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Sale;
 use App\Models\Product;
+use Illuminate\Support\Facades\DB;
 
 
 class SalesController extends Controller
@@ -30,8 +31,20 @@ class SalesController extends Controller
             return response()->json(['message' => '商品が在庫不足です']);
         }
     
-        $product->stock -= $quantity; 
-        $product->save();
+        //$product->stock -= $quantity; 
+        //$product->save();
+
+        try{
+            DB::beginTransaction();
+
+            $product->stock -= $quantity;
+
+            $product->save();
+
+            DB::commit();
+        } catch (Throwable $e){
+            DB::rollBack();
+        }
     
     
         $sale = new Sale([
@@ -41,6 +54,6 @@ class SalesController extends Controller
         $sale->save();
     
         return response()->json(['message' => '購入成功']);
-        return response()->json($sale);
+        //return response()->json($sale);
     }
 }
