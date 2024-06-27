@@ -107,6 +107,7 @@ $.ajaxSetup({
       e.preventDefault();
         var clickEle = $(this)
         let serchData = $('#serch-form').serialize();
+        //var event = $('#data-delete').get.onclick();
         
         $.ajax({
           type:'get',
