@@ -102,6 +102,26 @@ $.ajaxSetup({
   }
 });
 
+  $(function deleteEvent() {
+
+    $('data-delete').on('click',function(){
+      $.ajax({
+          type:'get',
+          url:'delete',
+          dataType:'html',
+          data:{'id':productID},
+    }).done(function(){
+      deleteEvent();
+    })
+
+  })
+
+  $(function(){
+    deleteEvent();
+  })
+
+
+
   $(function(){
     $('.serch-btn').on('click',function(e){
       e.preventDefault();
@@ -117,6 +137,7 @@ $.ajaxSetup({
         }).done(function(data){
             let newTable = $(data).find('#serch-data')
             $('#serch-data').replaceWith(newTable); 
+            deleteEvent();
         })
     })    
       
