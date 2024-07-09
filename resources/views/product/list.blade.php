@@ -102,23 +102,15 @@ $.ajaxSetup({
   }
 });
 
-  $(function deleteEvent() {
+  function deleteEvent() {
 
-    $('data-delete').on('click',function(){
-      $.ajax({
-          type:'get',
-          url:'delete',
-          dataType:'html',
-          data:{'id':productID},
-    }).done(function(){
-      deleteEvent();
-    })
-
-  })
-
-  $(function(){
+    button.addActionListener(new ButtonClickListener());
     deleteEvent();
-  })
+
+    public void actionPerformed(ActionEvent e) {
+      label.setText("Button has been clicked!");
+        }
+    })
 
 
 
