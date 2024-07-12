@@ -104,35 +104,6 @@ $.ajaxSetup({
 
   function deleteEvent() {
 
-    button.addActionListener(new ButtonClickListener());
-    deleteEvent();
-
-    public void actionPerformed(ActionEvent e) {
-      label.setText("Button has been clicked!");
-        }
-    })
-
-
-
-  $(function(){
-    $('.serch-btn').on('click',function(e){
-      e.preventDefault();
-        var clickEle = $(this)
-        let serchData = $('#serch-form').serialize();
-        //var event = $('#data-delete').get.onclick();
-        
-        $.ajax({
-          type:'get',
-          url:'serch',
-          dataType:'html',
-          data:serchData,
-        }).done(function(data){
-            let newTable = $(data).find('#serch-data')
-            $('#serch-data').replaceWith(newTable); 
-            deleteEvent();
-        })
-    })    
-      
     $('.data-delete').on('click',function(e){
       e.preventDefault();
       var deleteConfirm = confirm('削除してよろしいですか？');
@@ -150,21 +121,40 @@ $.ajaxSetup({
           clickEle.parents('tr').remove();
         }) 
       
-      }else{
-        (function(){
+        }else{
+          (function(){
           e.preventDefault()
-      });
-    };
+          });
+        }
+      }
+    });
+  }  
+
+
+
+  $(function(){
+    deleteEvent();
+    $('.serch-btn').on('click',function(e){
+      e.preventDefault();
+        var clickEle = $(this)
+        let serchData = $('#serch-form').serialize();
+        //var event = $('#data-delete').get.onclick();
+        
+        $.ajax({
+          type:'get',
+          url:'serch',
+          dataType:'html',
+          data:serchData,
+        }).done(function(data){
+            let newTable = $(data).find('#serch-data')
+            $('#serch-data').replaceWith(newTable); 
+            deleteEvent();
+          });
+    });   
+      
+  
 
   });
-
-//function checkDelete(){
-  //  if(window.confirm('削除してよろしいですか？')){
-    //    return true;
-   // } else {
-     //   return false;
-  //  }
-   });
 </script>
 
 @endsection

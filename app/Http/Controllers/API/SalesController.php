@@ -41,18 +41,20 @@ class SalesController extends Controller
 
             $product->save();
 
+            $sale = new Sale([
+                'product_id' => $id,
+            ]);
+        
+            $sale->save();
+
             DB::commit();
+        
         } catch (Throwable $e){
             DB::rollBack();
         }
     
     
-        $sale = new Sale([
-            'product_id' => $id,
-        ]);
-    
-        $sale->save();
-    
+       
         return response()->json(['message' => '購入成功']);
         //return response()->json($sale);
     }
